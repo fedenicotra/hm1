@@ -47,15 +47,10 @@
           ?>
         </div>
         <div id="parentN" class="flex_cont flex_column center_content ac_content">
+          <img class="loading-image" src="ajax-loader.gif" alt="Caricamento in corso...">
         </div>
       </div>
     </div>
   </body>
 </html>
 
-<!-- 
-  TO DO
-  Limita il contenuto a 3 righe max, aggiungi i 
-          puntini alla fine.
-  
- -->

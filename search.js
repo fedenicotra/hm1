@@ -20,18 +20,9 @@ function getThreads(){
     .then(onResponse)
     .then(data => {
 
-        // <div class="post">
-        //     <a href="thread.php?thread=4">
-        //         <div class="flex_cont head-post">
-        //             <p class="author">Genesis Mellotron</p>
-        //         </div>
-        //         <p class="post-content">
-        //         Vorrei ottenere lo stesso suono di Watcher of the Skies, avete qualche VST da consigliarmi? Grazie...</p>
-        //     </a>
-        // </div>
-
         const parentDiv = document.querySelector("#parentN");
         const len = data["Lenght"];
+        parentDiv.innerHTML = "";
 
         if(len === "0"){
             const nores = document.createElement("p");
@@ -41,7 +32,7 @@ function getThreads(){
         }
 
         const threads = data["Threads"];
-        
+
         for(let thread of threads)
         {
             const div_th = document.createElement("div");
@@ -56,7 +47,6 @@ function getThreads(){
             content.classList.add("post-content");
 
             title.textContent = thread["titolo"];
-            //console.log(thread["contenuto"].length);
             if(thread["contenuto"].length > 320){
                 content.textContent = thread["contenuto"].substring(0, 320) + "...";
             }

@@ -91,22 +91,6 @@ function unlike(event){
     });
 }
 
-
-function test(event){
-    // fetch("http://192.168.1.137/hm1/api_db/test.php", {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //         user_id: login_id.textContent,
-    //         content: "Contenuto"
-    //     })
-    // }).then(onResponse)
-    // .then(data => {
-    //     console.log(data);
-    // });
-    
-    console.log(event.currentTarget);
-}
-
 function sendReply(event){
     const id = login_id.textContent;
     const cont = document.querySelector("#replybody");
@@ -128,12 +112,6 @@ function sendReply(event){
     })
     .then(onResponse)
     .then(data => {
-        // data contiene le stesse informazioni passate tramite
-        // POST con in più la data. Si creerà un nuovo post
-        // da allegare alla pagina.
-        // Inserisci la classe hidden al replyContainer
-        // data contiene anche il numero di ordine del post
-        // console.log(data);
         const div_post = document.createElement("div");
         div_post.classList.add("post");
         div_post.id="post-" + data["n_ordine"];
@@ -185,49 +163,29 @@ function getPosts(){
     fetch("http://192.168.1.137/hm1/api_db/getThread.php?thread=" + id_th)
     .then(onResponse)
     .then(data => {
-        //console.log(data);
         //Generazione Titolo
-
-        // <div class="post thread-title">
-        //     Mellotron Genesis
-        // </div>
-        // console.log(data);
         const parentDiv = document.querySelector("#parentN");
+        const titlesite = document.querySelector("title");
         parentDiv.innerHTML = "";
         const div_title = document.createElement("div");
         div_title.classList.add("post", "thread-title");
         div_title.textContent = data[0];
+        titlesite.textContent = data[0] + " - Effectopic";
         if(data["error"]){
             div_title.textContent = "Thread not found";
             div_title.classList.add("error");
+            titlesite.textContent = "Thread not found";
+            parentDiv.appendChild(div_title);
+            return;
         }
+
         parentDiv.appendChild(div_title);
 
         //Generazione posts
-        //     <div id="post-0" class="post">
-        //         <div class="flex_cont head-post">
-        //             <p class="author">ASD</p>
-        //             <p class="author date">10-10-2022</p>
-        //         </div>
-        //         <p class="post-content">
-        //             Vorrei ottenere lo stesso suono di Watcher of the Skies, avete qualche VST da consigliarmi? Grazie...
-        //         </p>
-        //     </div>
-        // <div class="spotdiv">
-        //     <a href="#1">
-        //     Artista - Canzone
-        //     </a><br>
-        //     <a href="#2">
-        //     Artista - Canzone 2
-        //     </a>
-        // </div>
 
-        if(data["error"]){
-            return;
-        }
         const posts = data[1];
         const songs = data[2];
-        // console.log(posts);
+
         for(let post of posts)
         {
             const div_post = document.createElement("div");
@@ -315,14 +273,10 @@ function getPosts(){
             footpost.appendChild(buttonlike);
             div_post.appendChild(footpost);
 
-            // buttonlike.addEventListener("click", like);
-
             parentDiv.appendChild(div_post);
         }
 
-        // <div class="flex_cont br-container">
-        //     <button id="br">Rispondi</button>
-        // </div>
+        // Bottone Risposta
 
         const replybutton = document.createElement("button");
         const brContainer = document.createElement("div");
@@ -335,18 +289,8 @@ function getPosts(){
         brContainer.appendChild(replybutton);
         parentDiv.appendChild(brContainer);
 
-        // <div class="post reply-container hidden" id="repcont">
-        //     <div class="flex_cont head-post">
-        //         <p class="author">IL MIO USERNAME</p>
-        //     </div>
-        //     <div class="flex_cont flex_column ac_content center_content">
-        //         <textarea class="main-content not-resizable" placeholder="Rispondi qui" name="replybody" id="replybody" rows="3"></textarea>
-        //     </div>
-        //     <div class="flex_cont br-container">
-        //         <button id="subreply">Invia</button>
-        //     </div>
-        // </div>
-
+        // Sezione di risposta
+        
         if(login_id===null){
             replybutton.addEventListener("click", redirectToLogin);
         }
@@ -375,26 +319,17 @@ function getPosts(){
             textarea.name = "replybody";
             textarea.id = "replybody";
             textarea.rows = "4";
-            // textarea.setAttribute("form", "repform");
-            // textarea.setAttribute("required", "");
             divta.appendChild(textarea);
             replyContainer.appendChild(divta);
 
             textarea.addEventListener("input", onInput);
 
             const subreply = document.createElement("button");
-            // const repform = document.createElement("form");
-            // repform.action="thread.php";
-            // repform.method="get";
-            // repform.name="repform";
             subreply.id = "subreply";
             subreply.textContent = "Invia";
-            // subreply.type="submit";
             divSub.classList.add("flex_cont", "br-container");
 
             divSub.appendChild(subreply);
-            // repform.appendChild(divta);
-            // repform.appendChild(divSub);
 
             replyContainer.appendChild(divSub);
 

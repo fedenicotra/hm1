@@ -22,9 +22,6 @@
       $query = "CALL createTopic('$titolo', '$text', $id);";
       
       $res = mysqli_query($conn, $query);
-      //CATEGORIE
-      //SAREBBE BELLO SE RIPORTASSE ALLA VISUALIZZAZIONE DEL THREAD
-      //mysqli_free_result($res);
       $query = "SELECT id_th FROM Thread WHERE titolo = '$titolo' AND id_creatore = $id ORDER BY id_th DESC LIMIT 1";
       
       $res = mysqli_query($conn, $query);

@@ -39,7 +39,7 @@
         $reg_date = date("Y-m-d");
         $d = date('Y-m-d H:i:s', time());
 
-        $query = "INSERT INTO `account` (`id_acc`, `email`, `username`, `hashed_p`, `reg_date`, `last_access`, `profile_photo`, `end_date_ban`) VALUES (NULL, '$email', '$user', '$h_pass', '$reg_date', '$d', NULL, NULL)";
+        $query = "INSERT INTO `account` (`id_acc`, `email`, `username`, `hashed_p`, `reg_date`, `last_access`) VALUES (NULL, '$email', '$user', '$h_pass', '$reg_date', '$d')";
         
         mysqli_begin_transaction($conn);
         try{
